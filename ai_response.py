@@ -2,7 +2,7 @@ import openai
 import json
 from pprint import pprint
 
-openai.api_key = "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"
+openai.api_key = "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"
 
 number_of_dishes = 3
 number_of_ingredients = 5
