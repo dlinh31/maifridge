@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from ai_response import get_dishes
+from ai_images import get_images
 
 
 
@@ -23,6 +24,12 @@ def process():
     food_dict = get_dishes(data)
     print (food_dict)
     return jsonify(result=food_dict)
+
+@app.route('/url', methods=['POST'])
+def url():
+    url_dict = get_images(food_dict)
+    print(url_dict)
+    return jsonify(result=url_dict)
 
 @app.route('/food', methods=['POST']) 
 def food():

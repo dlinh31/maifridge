@@ -5,9 +5,10 @@ const recipeCloseBtn = document.getElementById('recipe-close-btn');
 const loader = document.querySelector(".loader");
 const loaderContainer = document.querySelector(".loader-container");
 const loaderText = document.querySelector(".loader-text");
-const waitingTime = 30000;
+const waitingTime = 10000;
 
 let food_dict = {}
+let url_dict = {}
 // Event listeners
 searchBtn.addEventListener('click', getMealList);
 
@@ -58,17 +59,44 @@ function getMealList() {
         });
     };
 
+    let second_function = function () {
+        $.ajax({ 
+            url: '/url', 
+            type: 'POST',
+            success: function(response) { 
+                console.log(url_dict);
+            }, 
+            error: function(error) {
+                console.log("error"); 
+                console.log(error); 
+            },
+            
+            })
+            .done(function(data) {
+                url_list = data['result'];
+                console.log(url_dict);        
+
+        }); 
+
+        return new Promise(resolve => {
+            setTimeout(function () {
+                resolve("\t\t This is first promise");
+            }, waitingTime);
+        });
+    };
+
 
     
     let async_function = async function () {
         await first_function();
+        await second_function();
         let html = "";
         
         for (const key in food_dict) {
             html += `
             <div class="meal-item" id="${key}"">
-                <div class="meal-img">
-                    <img src="../static/images/sample_food.jpg" alt="food">
+                <div class="meal-img"> 
+                    <img src=${url_dict.get(key)} alt="food">
                 </div>
                 <div class="meal-name">
                     <h3>${key}</h3>
